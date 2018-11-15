@@ -3,16 +3,25 @@
 #include <iostream>
 #include <string>
 #include <Windows.h>
+#include <chrono>
 #include "StockList.h"
 #include "FileList.h"
+
 using namespace std;
 
 FileList getFileNames(string folder);
 
 int main()
 {
+	auto start = chrono::steady_clock::now();
+
 	FileList fileNames = getFileNames("C:\\Users\\Brian\\Desktop\\Input_Files"); //Store File Names in a linked list
 	
+	auto end = chrono::steady_clock::now();
+	auto diff = end - start;
+	cout << "Time Elapsed: " << chrono::duration <double, milli>(diff).count() << " sec" << endl;
+
+
 	system("pause");
 	return 0;
 }
