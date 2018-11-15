@@ -1,14 +1,14 @@
 #pragma once
-#ifndef LINKEDLISTS_H
-#define LINKEDLISTS_H
+#ifndef STOCKLIST_H
+#define STOCKLIST_H
 //#include <string>
 //#include <iostream>
 using namespace std;
 
-class LinkedList
+class StockList
 {
 private:
-	struct ListNode
+	struct StockNode
 	{
 		string name;
 		string date;
@@ -17,29 +17,29 @@ private:
 		float low;
 		float close;
 		float volume;
-		struct ListNode *next;  // To point to the next node
+		struct StockNode *next;  // To point to the next node
 	};
 
-	ListNode *head;
+	StockNode *head;
 
 public:
 		// Constructor
-		LinkedList()
+		StockList()
 		{
 			head = nullptr;
 		}
 
 		// Destructor
-		~LinkedList();
+		//~StockList();
 
 		// Linked list operations
 		void appendNode(string name, string date, float open, float high, float low, float close, float volume)
 		{
-			ListNode *newNode;  // To point to a new node
-			ListNode *nodePtr;  // To move through the list
+			StockNode *newNode;  // To point to a new node
+			StockNode *nodePtr;  // To move through the list
 
 			// Allocate a new node and store info there.
-			newNode = new ListNode;
+			newNode = new StockNode;
 			newNode->name = name;
 			newNode->date = date;
 			newNode->open = open;
@@ -69,7 +69,7 @@ public:
 
 		void displayList() const
 		{
-			ListNode *nodePtr;  // To move through the list
+			StockNode *nodePtr;  // To move through the list
 
    // Position nodePtr at the head of the list.
 			nodePtr = head;
@@ -86,7 +86,7 @@ public:
 				 cout << nodePtr->high << endl;
 				 cout << nodePtr->low << endl;
 				 cout << nodePtr->close << endl;
-				 cout << nodePtr->volume << endl;
+				cout << nodePtr->volume << endl;
 
 				// Move to the next node.
 				nodePtr = nodePtr->next;
