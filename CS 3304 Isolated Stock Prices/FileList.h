@@ -1,8 +1,11 @@
 #pragma once
 #ifndef FILELIST_H
 #define FILELIST_H
-//#include <string>
-//#include <iostream>
+#include <string>
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <vector>
 using namespace std;
 
 class FileList
@@ -74,6 +77,53 @@ public:
 			// Move to the next node.
 			nodePtr = nodePtr->next;
 		}
+	}
+
+	StockList iterateThroughFiles (FileList fileNames)
+	{
+		FileNode *nodePtr;
+		StockList stocks;
+		nodePtr = head;
+		
+		while (nodePtr)
+		{
+			
+			string str;
+			string beginPath = "C:\\Users\\Brian\\Desktop\\Input_Files\\";
+			string fileName = nodePtr->fileName;
+			string fullPath = beginPath + fileName;
+			ifstream path(fullPath);
+			vector <string> data;
+			if (!path)
+				cerr << "Could not open the file!" << endl;
+			int i = 0;
+			while (getline(path, str, ','))
+			{
+				data.push_back(str);
+
+				if (data.size() == 6)
+				{
+					stocks.appendNode(data[0], data[1], data[2], data[3], data[4], data[5], data[6]);
+					data.clear();
+				}
+			}
+			nodePtr = nodePtr->next;
+		}
+		
+		return stocks;
+	}
+
+	vector <string> dataSplitter(string data)
+	{
+		vector <string> stockData;
+		istringstream ss(data);
+		string token;
+		int i = 0;
+		while (getline(ss, token, ','))
+		{
+			stockData.push_back(token);
+		}
+		return stockData;
 	}
 };
 

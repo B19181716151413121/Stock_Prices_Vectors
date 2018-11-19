@@ -10,16 +10,22 @@
 using namespace std;
 
 FileList getFileNames(string folder);
+StockList readingFromFolder(FileList fileNames);
 
 int main()
 {
+	cout << "Program Begin" << endl;
 	auto start = chrono::steady_clock::now();
 
 	FileList fileNames = getFileNames("C:\\Users\\Brian\\Desktop\\Input_Files"); //Store File Names in a linked list
+	StockList stocks = fileNames.iterateThroughFiles(fileNames);
 	
+	stocks.displayList();
+
 	auto end = chrono::steady_clock::now();
 	auto diff = end - start;
-	cout << "Time Elapsed: " << chrono::duration <double, milli>(diff).count() << " sec" << endl;
+	cout << "Program End" << endl;
+	cout << "Time Elapsed: " << chrono::duration <double, milli>(diff).count()/1000 << " sec" << endl;
 
 
 	system("pause");
@@ -46,3 +52,58 @@ FileList getFileNames(string folder)
 	return names;
 }
 
+/*
+StockList readingFromFolder(FileList fileNames)
+{
+	StockList stocks;
+	StockList *nodeptr;
+	StockList *head;
+
+	nodeptr = head;
+
+	while (nodeptr)
+	{
+		int j = 0;
+		string str;
+		string beginPath = "C:\\Users\\Brian\\Desktop\\Input_Files\\";
+		string fileName = fileNames[i];
+		string fullPath = beginPath + fileName;
+		ifstream path(fullPath);
+		int stockCount = 0;
+
+		if (!path)
+			cerr << "Could not open the file!" << endl;
+		while (getline(path, str))
+		{
+			stocks.push_back(dataSplitter(str));
+			stockCount++;
+		}
+
+		nodePtr = nodePtr->next;
+	}
+	return stocks;
+}
+
+tock dataSplitter(string data)//Takes data from line, and returns it as a struct
+{
+	Stock stockData;
+	istringstream ss(data);
+	string token;
+	vector <string> rawData;//Vector to move info from streamed line to stuct
+
+	while (getline(ss, token, ','))
+	{
+		rawData.push_back(token);
+	}
+
+	stockData.name = rawData[0];
+	stockData.date = rawData[1];
+	stockData.open = stof(rawData[2]);
+	stockData.high = stof(rawData[3]);
+	stockData.low = stof(rawData[4]);
+	stockData.close = stof(rawData[5]);
+	stockData.volume = stof(rawData[6]);
+
+	return stockData;
+}
+*/

@@ -33,7 +33,7 @@ public:
 		//~StockList();
 
 		// Linked list operations
-		void appendNode(string name, string date, float open, float high, float low, float close, float volume)
+		void appendNode(string name, string date, string open, string high, string low, string close, string volume)
 		{
 			StockNode *newNode;  // To point to a new node
 			StockNode *nodePtr;  // To move through the list
@@ -42,11 +42,11 @@ public:
 			newNode = new StockNode;
 			newNode->name = name;
 			newNode->date = date;
-			newNode->open = open;
-			newNode->high = high;
-			newNode->low = low;
-			newNode->close = close;
-			newNode->volume = volume;
+			newNode->open = stof(open);
+			newNode->high = stof(high);
+			newNode->low = stof(low);
+			newNode->close = stof(close);
+			newNode->volume = stof(volume);
 			newNode->next = nullptr;
 
 			// If there are no nodes in the list
@@ -91,6 +91,7 @@ public:
 				// Move to the next node.
 				nodePtr = nodePtr->next;
 			}
+			cout << endl;
 		}
 };
 
