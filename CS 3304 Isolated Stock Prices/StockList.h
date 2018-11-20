@@ -5,6 +5,7 @@
 //#include <iostream>
 using namespace std;
 
+//Linked list designed to store information for each stock
 class StockList
 {
 private:

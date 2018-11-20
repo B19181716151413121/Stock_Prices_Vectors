@@ -8,6 +8,7 @@
 #include <vector>
 using namespace std;
 
+//Linked list for storing all file names in folder
 class FileList
 {
 private:
@@ -79,6 +80,7 @@ public:
 		}
 	}
 
+	//Read every file, extract data, and store it into stock linked list
 	StockList iterateThroughFiles (FileList fileNames)
 	{
 		FileNode *nodePtr;
@@ -97,15 +99,10 @@ public:
 			if (!path)
 				cerr << "Could not open the file!" << endl;
 			int i = 0;
-			while (getline(path, str, ','))
+			while (getline(path, str, ','))//Seperates by comma
 			{
-				data.push_back(str);
+				cout << str << endl;
 
-				if (data.size() == 6)
-				{
-					stocks.appendNode(data[0], data[1], data[2], data[3], data[4], data[5], data[6]);
-					data.clear();
-				}
 			}
 			nodePtr = nodePtr->next;
 		}
@@ -113,18 +110,6 @@ public:
 		return stocks;
 	}
 
-	vector <string> dataSplitter(string data)
-	{
-		vector <string> stockData;
-		istringstream ss(data);
-		string token;
-		int i = 0;
-		while (getline(ss, token, ','))
-		{
-			stockData.push_back(token);
-		}
-		return stockData;
-	}
 };
 
 #endif 
