@@ -81,18 +81,17 @@ public:
 			{
 				// Display the value in this node.
 				 
-				 cout << nodePtr->name << endl;
-				 cout << nodePtr->date << endl;
-				 cout << nodePtr->open << endl;
-				 cout << nodePtr->high << endl;
-				 cout << nodePtr->low << endl;
-				 cout << nodePtr->close << endl;
-				cout << nodePtr->volume << endl;
-
+				 cout << "Name:   " << nodePtr->name << endl;
+				 cout << "Date:   " << nodePtr->date << endl;
+				 cout << "Open:   " << nodePtr->open << endl;
+				 cout << "High:   " << nodePtr->high << endl;
+				 cout << "Low:    " << nodePtr->low << endl;
+				 cout << "Close:  " << nodePtr->close << endl;
+				 cout << "Volume: " << nodePtr->volume << endl << endl;
 				// Move to the next node.
 				nodePtr = nodePtr->next;
 			}
-			cout << endl;
+			cout << endl << endl;
 		}
 };
 

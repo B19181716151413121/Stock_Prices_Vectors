@@ -96,18 +96,33 @@ public:
 			string fullPath = beginPath + fileName;
 			ifstream path(fullPath);
 			vector <string> data;
+			
 			if (!path)
 				cerr << "Could not open the file!" << endl;
 			int i = 0;
-			while (getline(path, str, ','))//Seperates by comma
+			while (getline(path, str))//Seperates by comma
 			{
-				cout << str << endl;
-
+				data = dataSplitter(str);
+				stocks.appendNode(data[0], data[1], data[2], data[3], data[4], data[5], data[6]);
 			}
 			nodePtr = nodePtr->next;
 		}
 		
 		return stocks;
+	}
+	
+	vector <string> dataSplitter(string data)
+	{
+		StockList stock;
+		istringstream ss(data);
+		string token;
+		vector <string> rawData;//Vector to move info from streamed line to stuct
+		int i = 0;
+		while (getline(ss, token, ','))
+		{
+			rawData.push_back(token);
+		}
+		return rawData;
 	}
 
 };

@@ -1,3 +1,4 @@
+/*
 // Brian Cobo
 // Robert Medrano
 // Parsing: https://stackoverflow.com/questions/11719538/how-to-use-stringstream-to-separate-comma-separated-strings
@@ -24,7 +25,7 @@ int main()
 	FileList fileNames = getFileNames("C:\\Users\\Brian\\Desktop\\Input_Files"); //Store File Names in a linked list
 	StockList stocks = fileNames.iterateThroughFiles(fileNames);//Go through each file to store info
 	
-	stocks.displayList();//Displays Stock info
+	//stocks.displayList();//Displays Stock info
 
 	auto end = chrono::steady_clock::now();// Stop time
 	auto diff = end - start;
@@ -55,3 +56,4 @@ FileList getFileNames(string folder)//Retrieves all file names in folder and sto
 	}
 	return names;
 }
+*/
