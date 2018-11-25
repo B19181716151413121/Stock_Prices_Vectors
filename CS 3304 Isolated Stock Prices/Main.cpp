@@ -10,6 +10,7 @@
 #include <direct.h>
 #include <ctime>
 #pragma warning(disable : 4996)
+
 //#include "Nodes.h";
 using namespace std;
 
@@ -29,11 +30,12 @@ struct Stock//Stores information about each stock. Contains name, date, open pri
 
 ///function declarations
 Stock dataSplitter(string data);//Takes string and splits it by comma and stores info into Stock
-void printStocks(vector <Stock> data);//Writes stock info into text file
+void printOpenStocks(vector <Stock> data, int numberOfFile);//Writes open stock info into text file
+void printCloseStocks(vector <Stock> data, int numberOfFile);//Writes close stock info into text file
 vector <Stock> readingFromFolder(vector <string> fileNames);//Reads all files from vector of file names strings
 vector <string> getFileNames(string folder);//Takes path and puts all files into a vector
-void Occurences(vector<Stock> data, vector<Stock> NewData, int NumberOfFiles); //Tracks for a specific number of occurences of a stock ticker
-void Compare(vector<Stock> data, vector <string> names, vector<Stock> &NewData); //compares data with names of tickers that are in all files and then puts it in NewData Vector
+vector <Stock> Occurences(vector<Stock> data, vector<Stock> NewData, int NumberOfFiles); //Tracks for a specific number of occurences of a stock ticker
+vector <Stock> Compare(vector<Stock> data, vector <string> names, vector<Stock> &NewData); //compares data with names of tickers that are in all files and then puts it in NewData Vector
 template<typename K, typename V>
 bool findByValue(vector<K> & vec, map<K, V> mapOfElemen, V value); //Finds all the values with specific occurences(V = 24 for number of files)
 
@@ -58,11 +60,10 @@ int main()
 	int NumberOfFiles = fileNames.size();
 	cout << "Number Of Files = " << NumberOfFiles << endl;
 	
-	Occurences(data, NewData, NumberOfFiles);
+	NewData = Occurences(data, NewData, NumberOfFiles);
+	//cout << NewData.size();
 	printOpenStocks(NewData, NumberOfFiles);
-	
-	//print time and stop clock
-	time_t rawtime;
+	printCloseStocks(NewData, NumberOfFiles);
 	time(&rawtime);
 	cout << ctime(&rawtime);
 	auto end = chrono::steady_clock::now();// Stop time
@@ -98,18 +99,37 @@ Stock dataSplitter(string data)//Takes data from line, and returns it as a struc
 
 void printOpenStocks(vector <Stock> data, int numberOfFiles)
 {
-	ofstream ofile("Open_Prices.txt");
+	ofstream ofile("C:\\3304 Output Files\\Open_Prices.txt");
+	for (unsigned int i = 0; i < data.size(); i++)
+	{
+		ofile << data[i].name << ',';
+	}
 	for (unsigned int j = 0; j < numberOfFiles; j++)
 	{
-		cout << data[j].date << ',';
-		for (unsigned int i = 0; i < data.size(); i++)
-		{
-			ofile << data[i].name << ',';
-
-		}
+		ofile << data[j].date << ',';
 		for (unsigned int k = 0; k < data.size(); k++)
 		{
-			ofile << data[k].open << ',';
+			if(data[k].date == data[j].date)
+				ofile << data[k].open << ',';
+		}
+	}
+	ofile.close();
+}
+
+void printCloseStocks(vector <Stock> data, int numberOfFiles)
+{
+	ofstream ofile("C:\\3304 Output Files\\Close_Prices.txt");
+	for (unsigned int i = 0; i < data.size(); i++)
+	{
+		ofile << data[i].name << ',';
+	}
+	for (unsigned int j = 0; j < numberOfFiles; j++)
+	{
+		ofile << data[j].date << ',';
+		for (unsigned int k = 0; k < data.size(); k++)
+		{
+			if (data[k].date == data[j].date)
+				ofile << data[k].close << ',';
 		}
 	}
 	ofile.close();
@@ -190,7 +210,7 @@ bool findByValue(vector<K> & vec, map<K, V> mapOfElemen, V value) //Finds all th
 	return bResult;
 }
 
-void Occurences(vector<Stock> data, vector<Stock> NewData, int NumberOfFiles) //mapping and counting everytime a stock ticker duplicate is found.
+vector <Stock> Occurences(vector<Stock> data, vector<Stock> NewData, int NumberOfFiles) //mapping and counting everytime a stock ticker duplicate is found.
 {
 	map<string, int> wordsCount;
 	//Look if it's already there.
@@ -226,28 +246,29 @@ void Occurences(vector<Stock> data, vector<Stock> NewData, int NumberOfFiles) //
 		cout << "No Key is found with the given value" << endl;
 	}
 
-	Compare(data, tickers, NewData);
-
+	vector <Stock> sortedData = Compare(data, tickers, NewData);
+	return sortedData;
 }
 
-void Compare(vector<Stock> data, vector<string> names, vector<Stock> &NewData)
+vector <Stock> Compare(vector<Stock> data, vector<string> names, vector<Stock> &NewData)
 {
 	int k = 0;
 	for (int i = 0; i < names.size(); i++) {
 		for (int j = 0; j < data.size(); j++) {
 
 			if (names[i] == data[j].name) {
-				NewData.push_back(data[j]);
-				/*cout << NewData[k].name << ",";				//
+				NewData.push_back(data[j]);/*
+				cout << NewData[k].name << ",";				//
 				cout << NewData[k].date << ",";				//
 				cout << NewData[k].open << ",";				//
 				cout << NewData[k].high << ",";				//comment this stuff if you dont want to see all data in console
 				cout << NewData[k].low << ",";				//
 				cout << NewData[k].close << ",";			//
-				cout << NewData[k].volume << "\n";*/			//
+				cout << NewData[k].volume << "\n";	*/		//
 				k++;
 			}
 
 		}
 	}
+	return NewData;
 }
