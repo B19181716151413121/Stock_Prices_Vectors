@@ -59,7 +59,7 @@ int main()
 	cout << "Number Of Files = " << NumberOfFiles << endl;
 	
 	Occurences(data, NewData, NumberOfFiles);
-	//printStocks(NewData);
+	printOpenStocks(NewData, NumberOfFiles);
 	
 	//print time and stop clock
 	time_t rawtime;
@@ -96,20 +96,21 @@ Stock dataSplitter(string data)//Takes data from line, and returns it as a struc
 	return stockData;
 }
 
-void printStocks(vector <Stock> data)
+void printOpenStocks(vector <Stock> data, int numberOfFiles)
 {
-	ofstream ofile("Output.txt");
-
-	for (unsigned int i = 0; i < data.size(); i++)
+	ofstream ofile("Open_Prices.txt");
+	for (unsigned int j = 0; j < numberOfFiles; j++)
 	{
-		ofile << "Name:   " << data[i].name << endl;
-		ofile << "Date:   " << data[i].date << endl;
-		ofile << "Open:   " << data[i].open << endl;
-		ofile << "High:   " << data[i].high << endl;
-		ofile << "Low:    " << data[i].low << endl;
-		ofile << "Close:  " << data[i].close << endl;
-		ofile << "Volume: " << data[i].volume << endl;
-		ofile << endl << endl;
+		cout << data[j].date << ',';
+		for (unsigned int i = 0; i < data.size(); i++)
+		{
+			ofile << data[i].name << ',';
+
+		}
+		for (unsigned int k = 0; k < data.size(); k++)
+		{
+			ofile << data[k].open << ',';
+		}
 	}
 	ofile.close();
 }
