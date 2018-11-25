@@ -1,0 +1,40 @@
+Brian Cobo
+Robert Medrano
+Alex Nino
+Cole Popielarczyk
+Isolate Prices
+
+
+	We decided to use vectors over linked list because it was much faster and more efficient. After comparing the runtimes for both we concluded that the vector approach was about four to five times faster than the linked list approach. Both data structures can accomplish very similar tasks, they both can store data in a particular order. Vectors are dynamic arrays, where you can add and remove items at run-time. They map the items to contiguous memory. 
+	First the main function opens up the specified directory and searches for every file that is in that directory. We put all files in a vector of strings that will open every file in the vector. Each line is read from each folder, the data in each line is split by the comma and put it into a structure containing stock information. From there a struct is put into a vector containing information for all stocks. Each stock name is counted every time that specific shows up in the files.  The stock data is then output to a text file in a specified directory. 
+	The structure “stock” stores information about each stock. It contains the name, date, open price, high, low, closing price and volume. The function declarations include: DataSplitter, printOpenStocks, readingFromFolder, getFileNames, findByValue, Occurrences, and Compare. The function datatSplitter takes all data from a line, separates it by a comma and returns the data as a structure. The function printOpenStocks writes stock information into a text file. The function readingFromFolder reads all files from vector of filenames strings. The function getFileNames takes a path and puts all files into a folder. The boolean function findByValue searches a vector to find all values of a specific occurence to see if it exists. The function Occurrences maps and counts the number of times a stock ticker duplicate is found. The last function Compare, compares the stock data with the tickers. 
+We then proceed to the main function. First the current time is printed and the clock is started. This will allow us to keep track of the runtime for efficiency purposes. Vector <stock> data holds the processed data after it is put into a structure. Vector <string> file names is a vector containing the names of files in a folder. Vector <stock> NewData contains the new data ignoring the tickers that are not in all the files. We specify the file directory in order to get all the files and read them one by one. The number of files is then computed and outputted to the console. We then run our functions such as “Occurrences” and “printOpenStocks”. This allows the program to go through all the stocks and count the number of occurrences each one appears. These tickers are stored and outputted to the console.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Works Cited
+Time keeping: https://www.pluralsight.com/blog/software-development/how-to-measure-execution-time-intervals-in-c--
+
+Parsing: https://stackoverflow.com/questions/11719538/how-to-use-stringstream-to-separate-comma-separated-strings
+
+Opening files from folder: https://stackoverflow.com/questions/612097/how-can-i-get-the-list-of-files-in-a-directory-using-c-or-c
