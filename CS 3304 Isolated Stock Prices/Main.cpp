@@ -7,8 +7,12 @@
 #include <Windows.h>
 #include <map>
 #include <iterator>
+#include <direct.h>
+#include <ctime>
+#pragma warning(disable : 4996)
 //#include "Nodes.h";
 using namespace std;
+
 
 
 struct Stock//Stores information about each stock. Contains name, date, open price,
@@ -28,9 +32,6 @@ Stock dataSplitter(string data);//Takes string and splits it by comma and stores
 void printStocks(vector <Stock> data);//Writes stock info into text file
 vector <Stock> readingFromFolder(vector <string> fileNames);//Reads all files from vector of file names strings
 vector <string> getFileNames(string folder);//Takes path and puts all files into a vector
-bool searchVector(vector <string> data, string name); //Search vector to see if item exists 
-
-
 void Occurences(vector<Stock> data, vector<Stock> NewData, int NumberOfFiles); //Tracks for a specific number of occurences of a stock ticker
 void Compare(vector<Stock> data, vector <string> names, vector<Stock> &NewData); //compares data with names of tickers that are in all files and then puts it in NewData Vector
 template<typename K, typename V>
@@ -41,35 +42,34 @@ bool findByValue(vector<K> & vec, map<K, V> mapOfElemen, V value); //Finds all t
 
 int main()
 {
+	//Print time and start clock
+	time_t rawtime;
+	time(&rawtime);
+	cout << ctime(&rawtime);
 	auto start = chrono::steady_clock::now();//Begin counting time
 
 	vector <Stock> data;//Processed Data after put in struct
 	vector <string> fileNames; //Vector containing names of files in folder
-	int x;//Used for keeping terminal from quitting, no impact on main code
 	vector<Stock> NewData; // new data- ignoring tickers not in all files
 
-
-
 	fileNames = getFileNames("C:\\3304 Input Files\\");
-	cout << "READING FROM FILES" << endl;
+	_mkdir("C:\\3304 Output Files");
 	data = readingFromFolder(fileNames);
-
-	//cout << "PRINTING STOCKS" << endl;
-	//printStocks(data);//Outputs stock information on text file
-
-	//cout << "CREATING LIST OF STOCK NAMES";
-	//stockNames = findAllStockNames(data);//Creates a vector of all unique stock names
-
-	cout << "CREATING LIST OF STOCK NAMES WITH SPECIF NUMBER OF OCCUR\n";
 	int NumberOfFiles = fileNames.size();
+	cout << "Number Of Files = " << NumberOfFiles << endl;
+	
 	Occurences(data, NewData, NumberOfFiles);
 	//printStocks(NewData);
+	
+	//print time and stop clock
+	time_t rawtime;
+	time(&rawtime);
+	cout << ctime(&rawtime);
 	auto end = chrono::steady_clock::now();// Stop time
 	auto diff = end - start;
-	cout << "Program End" << endl;
+
 	cout << "Time Elapsed: " << chrono::duration <double, milli>(diff).count() / 1000 << " sec" << endl;
-	///cout << "Data Size: " << data.size();
-	cin >> x;
+	system("pause");
 	return 0;
 }
 
@@ -136,7 +136,6 @@ vector <Stock> readingFromFolder(vector <string> fileNames)
 			stocks.push_back(dataSplitter(str));
 			stockCount++;
 		}
-		cout << "File #" << i + 1 << " Contains " << stockCount << " Stocks." << endl;
 		if (stockCount > maxStock)
 		{
 			maxStock = stockCount;
@@ -144,8 +143,6 @@ vector <Stock> readingFromFolder(vector <string> fileNames)
 		}
 
 	}
-	cout << "The file with the most stocks is: " << "C:\\3304 Input Files\\" + fileNames[maxFile] << "with " << maxStock << " stocks";
-	cout << endl << endl;
 	string pathName = "C:\\3304 Input Files\\" + fileNames[maxFile];
 
 	return stocks;
@@ -216,7 +213,7 @@ void Occurences(vector<Stock> data, vector<Stock> NewData, int NumberOfFiles) //
 
 	if (result) //print all the stock tickers
 	{
-		cout << "Keys with value " << NumberOfFiles << " are," << endl;
+		//cout << "Keys with value " << NumberOfFiles << " are," << endl;
 		for (auto elem : tickers)
 		{
 
